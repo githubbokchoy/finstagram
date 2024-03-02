@@ -1,0 +1,69 @@
+header {
+    background-color: #244751;
+    color: #E8FDFF;
+  }
+
+header p {
+
+
+    color:#0000ff;
+}
+
+
+
+
+p {
+
+    color:#ff0000;
+    font-size: 24px;
+    padding-left: 40px;
+}
+
+article ul p {
+
+
+    color: #00bb48;
+}
+
+/* class selector */
+/* class selector */
+
+.brand-txt-light{
+
+    color: #860f0f;
+}
+
+
+body {
+    background-color: whitesmoke;
+    font-family: "Open Sans", sans-serif;
+  }
+
+  main {
+    background-color: white;
+    padding: 16px;
+  }
+
+
+  .finstagram-post {
+    margin-bottom: 47px;
+  }
+
+
+
+  .finstagram-post .user-info img {
+    border-radius: 50%;
+  }
+
+  .user-info img {
+    border-radius: 20%;
+  }
+
+ 
+
+  a.photo{
+    transition: padding 3s;
+  }
+  a.photo:hover{
+    padding: 10px;
+  }
