@@ -62,8 +62,10 @@ body {
  
 /* An anchor tag with photo, class, i.e.  same tag, vs. a. photo which is a photo class under anchor tag*/
   a.photo{
-    transition: padding 3s;
+    transition: padding 10s;
   }
-  a.photo:hover{
+  /* a.photo:hover{
     padding: 10px;
-  }
+  }*/
+
+  a.photo:hover{ padding: 10px; transition: padding 1s; }
