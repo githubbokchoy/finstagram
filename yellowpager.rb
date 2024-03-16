@@ -31,12 +31,12 @@ def yellow_pager(word)
                phone_num += alphanumeric_hash[letter].to_s
       
       end
-    puts phone_num
+    phone_num
       # ** return the mapped phone number **
   
     else
   
-      puts "False"
+      false
       
     end
   end
@@ -44,5 +44,5 @@ def yellow_pager(word)
   # ** call method and pass the variable here (you may need to print (puts) the return value) **
   yellow_pager_word = "Lighthouse"
 
-  yellow_pager(yellow_pager_word)
+  p yellow_pager(yellow_pager_word)
   
