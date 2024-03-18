@@ -1,4 +1,6 @@
 =begin
+
+mar 18 2024 testing
 Directions
 
 - Write a method that accepts a 10 character string of letters (both uppercase and lowercase)
