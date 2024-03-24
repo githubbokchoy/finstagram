@@ -17,3 +17,6 @@ configure do
   end
 
 end
+
+
+#bundle exec rake db:migrate

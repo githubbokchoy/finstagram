@@ -14,13 +14,53 @@ end
 #everytime there's an HTTP request, actions.rb gets triggered and sinatra goes through these requests and execute based on the actual requests
 #no routing conditional needed
 
+
+helpers do
+  def current_user
+    User.find_by(id: session[:user_id])
+  end
+
+  def is_prior_logout
+    params[:logout]
+    #p self  #this prints the entire login.erb file in terminal
+  end
+
+  def view_before_signin
+    params[:signinfirst]
+  end 
+end
+
 get '/' do
 
   # get all the finstagram posts from the DB (order by created at  field)
+  #issue, what if DB isn't available, can we build a new one??? Try deleting all records, and see if it works, if not, delete whole table, then use signup to recreate everything
+  #conditional to check if finstagram table exist or use validate function? active record
+#   check warning messages SIGUSR2 not implemented, signal based restart unavailable!
+# *** SIGUSR1 not implemented, signal based restart unavailable!
+# *** SIGHUP not implemented, signal based logs reopening unavailable!
+
+
+    pp session
+    session["brand_new key"] = "hey JJ kid"  #refer to environment.rb for sessino creation, cookies
+@current_user
+
     @finstagram_posts = FinstagramPost.order(created_at: :desc)
     #created_at: :desc is a hash, where :desc is a symbol, note :: would be subclass, but note the space between the colons, so it's not a subclass
+    #@current_user = User.find_by(id: session[:user_id])  #this line is superseded by the helper method for current user at the top
+
+
+    if !current_user
+    p "if not signd in, redirecting from homepage to login page"
+    p session #notice that session does not have user_id field even showing
+    redirect to('/login?signinfirst=true')
+    else
+     p "signed in, display home page " #if user already signed in, session in place
+     p session #if user already signed in, session in place-->
+    
+
     erb(:index)  #last line is used for the bodyof response
     #"Hello"  # will literally print hello being the last line, will show up in response tab, 
+    end
   end
 
 
@@ -32,7 +72,51 @@ get '/' do
     end
 
 
+    get '/login' do  #go to login page
 
+      # login page
+
+      if current_user #if user already logged in, redirect to homepage
+
+        redirect to('/')
+
+      else # if user is not logged in
+
+      #is_prior_logout = params["logout"]
+      is_prior_logout = params[:logout]
+      view_before_signin = params[:signinfirst]
+      #params.to_s
+      p "you're at the login page"
+      p is_prior_logout  #should print true if just logged out
+      #p @is_prior_logout
+      erb(:login) 
+      end
+
+    end
+
+      
+    post '/login' do # when we submit a form with an action of /login
+      #params.to_s   # just display the params for now to make sure it's working, displays hash from sinatra
+      # login page
+      username   = params[:username]
+      password   = params[:password]
+      @user = User.find_by(username: username)  ## 1. find user by username, 
+      # pp user #debug to see if user exists (nil means user doesn't exist)
+      if @user && @user.password == password #check if user exists and that user's password matches the password input
+        session[:user_id]=@user.id
+        #"success, #{@user.username} logged in!"
+        p "Success! User with id #{session[:user_id]} and username #{@user.username} and password #{@user.password} is logged in!"
+        redirect to('/')
+
+      else
+
+        @error_message = "Sorry, Login failed."
+        #"login failed"  #this message doesnt show on browser unless it's the last thing it does, but will print in terminal
+         erb(:login)
+      end
+     
+      #"hello"  #shows up on login page
+      end
 
     get '/signup' do     # if a user navigates to the path "/signup",
       @user = User.new   # setup empty @user object
@@ -81,8 +165,11 @@ if @user.save
   # return readable representation of User object
   #escape_html user.inspect
   p @user.inspect
-  "User #{username} saved!"
+  p "User #{@username} saved!"
+  redirect to('/login')
 
+  erb(:signup) #temp line
+# go back to signup.erb page but include user saved message there
 else
 
   # display error messages
@@ -91,5 +178,12 @@ else
   #p user.inspect
   erb(:signup) #goes back to signup page
 end
+   end
 
+    get '/logout' do
+      session[:user_id] = nil
+     p "logout successful, redirecting"
+      redirect to('/login?logout=true')
+      #"Logout successful for User with  username #{@user.username} and password #{@user.password}"  #this won't show up if session is clear, results in error
+      #id #{@user.id} 
     end

@@ -4,7 +4,19 @@
       <li><%= message %></li>
     <% end %>
   </ul>
+
+
   
+  <!--insert signup succesful message here? user signup successful , also ask about sinatra session key hash-->
+
+  <ul class="successful">
+    <% if @user.save  do  %>
+    <!--notice @user instance variable, refeences back to actions.rb variable @user, review scope-->
+      <li><%= "User #{@user.username} saved!" %></li>
+    <% end %>
+    <% end %>
+  </ul>
+
   <form action="/signup" method="POST">
     <div class="form-group">
       <label for="email">Email</label>

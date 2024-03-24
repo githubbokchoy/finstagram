@@ -26,6 +26,7 @@ def yellow_pager(word)
           word = word.upcase
         alphabet = ('A'..'Z').to_a
          numbers = [(2..6).to_a*3, [7]*4, [8]*3, [9]*4].flatten.sort
+         #numbers = [(2..6).flat_map { |i| [ i ] * 3 }, [7]*4, [8]*3, [9]*4].flatten  #works the same, but kept in the exact order without the need to sort
       alphanumeric_hash = Hash[alphabet.zip(numbers)] 
   
         word.each_char do |letter|

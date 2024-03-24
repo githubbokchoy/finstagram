@@ -31,3 +31,7 @@ class CreateBaseTables < ActiveRecord::Migration
   end
 
 end
+
+
+#bundle exec rake db:migrate
+
