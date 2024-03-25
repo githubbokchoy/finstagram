@@ -3,7 +3,8 @@ class FinstagramPost < ActiveRecord::Base
     has_many :comments
     has_many :likes
   
-    validates_presence_of :user #how is this used differently from a conditional?  this validates internally; calculator example validates external input instead
+    #validates_presence_of :user, :photo_url #how is this used differently from a conditional?  this validates internally; calculator example validates external input instead
+    validates :user, :photo_url, presence: true #email, :avatar_url, :username, :password, presence: true
   
     def humanized_time_ago
       time_ago_in_seconds = Time.now - self.created_at

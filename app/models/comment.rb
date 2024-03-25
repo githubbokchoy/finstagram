@@ -11,14 +11,7 @@ class Comment < ActiveRecord::Base
     validates :user_id, :finstagram_post_id, presence: true  #new line added to validate comment :text
 end
 
-
-#Comment.create(user_id: 3, finstagram_post_id: 5).valid? # => true
-p d = Comment.new(user_id: 3, finstagram_post_id: 5).valid?# => true
-#d.valid?
-
-# p new_comment.valid?
-#p Comment.new(finstagram_post_id: 10).valid? # => true
-#p new_comment2.valid?
-p "that's it"  #why is this printing twice?
+#p Comment.new(user_id: 3, finstagram_post_id: 5).valid?# => true,  .create
+p "this sentence is printed twice"
 
 #ruby ./app/models/comment.rb

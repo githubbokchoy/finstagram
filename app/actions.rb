@@ -15,7 +15,7 @@ end
 #no routing conditional needed
 
 
-helpers do
+helpers do  #why helpers rather than a bunch of standalone methods? can helpers accept inputs?
   def current_user
     User.find_by(id: session[:user_id])
   end
@@ -28,6 +28,13 @@ helpers do
   def view_before_signin
     params[:signinfirst]
   end 
+
+  def no_session_logout
+    params[:nosessionlogout]
+    
+  end
+
+#case to get input into 
 end
 
 get '/' do
@@ -181,9 +188,47 @@ end
    end
 
     get '/logout' do
+
+      if current_user
       session[:user_id] = nil
      p "logout successful, redirecting"
       redirect to('/login?logout=true')
       #"Logout successful for User with  username #{@user.username} and password #{@user.password}"  #this won't show up if session is clear, results in error
-      #id #{@user.id} 
+      #id #{@user.id}
+      else
+        session[:user_id] = nil #just in case
+        redirect to('/login?nosessionlogout=true')  #user is not even logged in to begin with
+        p "you haven't logged in initially, please log in again"
+      end
+
     end
+
+
+   
+    get '/finstagram_posts/new' do
+      @finstagram_post = FinstagramPost.new  #why do we need this line? pass errors from Actions.rb to the new.erb file
+      erb(:"finstagram_posts/new")
+    end
+    
+    post '/finstagram_posts' do
+      photo_url = params[:photo_url]
+      #p params.to_s
+      @finstagram_post = FinstagramPost.new({ photo_url: photo_url, user_id: current_user.id })
+    
+      if @finstagram_post.save
+        redirect(to('/'))
+      else
+        #@finstagram_post.errors.full_messages.inspect #no longer necessary, error messages will pass back to  new.erb below
+        erb(:"finstagram_posts/new")
+      end
+    end
+
+
+
+    get '/finstagram_posts/:id' do
+      @finstagram_post = FinstagramPost.find(params[:id])   # find the finstagram post with the ID from the URL
+      #escape_html @finstagram_post.inspect        # print to the screen for now
+      erb(:"finstagram_posts/show")  
+      
+    end
+

@@ -1,9 +1,13 @@
+<h2>Login to Finstagram</h2>
 
+<!--
 <header>
     <h1>Finstagram Login page</h1>
 <div class="login-info">
     <% if current_user %>   
+    -->
     <!--since helper method is added in action.rb, We don't need the @ for @current_userwhere we added it in the index.erb header, since we can just call the current_user helper method by it's name and have it return the user object.-->
+    <!--  
       <%= current_user.username %>
       <a href="/logout">Logout</a>
     <% else %>
@@ -15,6 +19,8 @@
 
   </header>
 
+  -->
+
 <%= @error_message if @error_message %>
 
 <!--if log out successful-->
@@ -24,7 +30,10 @@ shoud be done in javascript on client side. However, -->
       <% if is_prior_logout  %>
       <li><%= "logout successful!" %></li>
       <li><%= p "you've logged out " %></li>
-      
+       <% elsif no_session_logout  %>
+      <li><%= "you haven't logged in to begin with" %></li>
+      <li><%= p "you haven't logged in to begin with " %></li>
+
       <% else %>
     <li><%= "is_prior_logout is false" %></li>
     <li><%= p "new user session #{is_prior_logout} " %></li>  <!--is_prior_logout should be blank-->
