@@ -33,6 +33,10 @@ helpers do  #why helpers rather than a bunch of standalone methods? can helpers 
     params[:nosessionlogout]
     
   end
+  # return a boolean (true or false)
+  def logged_in?
+    !!current_user
+  end
 
 #case to get input into 
 end
@@ -54,22 +58,19 @@ get '/' do
     @finstagram_posts = FinstagramPost.order(created_at: :desc)
     #created_at: :desc is a hash, where :desc is a symbol, note :: would be subclass, but note the space between the colons, so it's not a subclass
     #@current_user = User.find_by(id: session[:user_id])  #this line is superseded by the helper method for current user at the top
-
-
     if !current_user
-    p "if not signd in, redirecting from homepage to login page"
-    p session #notice that session does not have user_id field even showing
-    redirect to('/login?signinfirst=true')
-    else
-     p "signed in, display home page " #if user already signed in, session in place
-     p session #if user already signed in, session in place-->
-    
-
-    erb(:index)  #last line is used for the bodyof response
-    #"Hello"  # will literally print hello being the last line, will show up in response tab, 
+      p "if not signd in, redirecting from homepage to login page"
+      p session #notice that session does not have user_id field even showing
+      redirect to('/login?signinfirst=true')
+      else
+       p "signed in, display home page " #if user already signed in, session in place
+       p session #if user already signed in, session in place-->
+      
+  
+      erb(:index)  #last line is used for the bodyof response
+      #"Hello"  # will literally print hello being the last line, will show up in response tab, 
+      end
     end
-  end
-
 
 #include other pages
   get '/profile' do
@@ -143,23 +144,6 @@ avatar_url = params[:avatar_url]
 username   = params[:username]
 password   = params[:password]
 
-=begin
-# if all user params are present, this validation uses actions.rb to validate, but inefficient
-if email.present? && avatar_url.present? && username.present? && password.present?
-
-  # instantiate and save a User
-  user = User.new({ email: email, avatar_url: avatar_url, username: username, password: password })
-  user.save
-
-  # return readable representation of User object
-  escape_html user.inspect
-
-else
-
-  # display simple error message
-  "Validation failed."
-end
-=end
 
  # instantiate a User, notice in validation test above, instantiation is done after the test //this is the most succinct way vs. @email = , @avatar_url =
  @user = User.new({ email: email, avatar_url: avatar_url, username: username, password: password })
@@ -203,7 +187,10 @@ end
 
     end
 
-
+# Before handler for '/finstagram_posts/new'
+before '/finstagram_posts/new' do
+  redirect to('/login') unless logged_in?
+end
    
     get '/finstagram_posts/new' do
       @finstagram_post = FinstagramPost.new  #why do we need this line? pass errors from Actions.rb to the new.erb file
@@ -225,10 +212,45 @@ end
 
 
 
-    get '/finstagram_posts/:id' do
-      @finstagram_post = FinstagramPost.find(params[:id])   # find the finstagram post with the ID from the URL
-      #escape_html @finstagram_post.inspect        # print to the screen for now
-      erb(:"finstagram_posts/show")  
-      
+    # Handle a GET request for the '/finstagram_posts/:id' path
+get '/finstagram_posts/:id' do
+  @finstagram_post = FinstagramPost.find_by(id: params[:id])
+
+  if @finstagram_post
+    erb(:'finstagram_posts/show')
+  else
+    halt(404, erb(:'errors/404'))
+  end
+end
+
+    post '/comments' do
+      # point values from params to variables
+      text = params[:text]
+      finstagram_post_id = params[:finstagram_post_id]
+    
+      # instantiate a comment with those values & assign the comment to the `current_user`
+      comment = Comment.new({ text: text, finstagram_post_id: finstagram_post_id, user_id: current_user.id })
+    
+      # save the comment
+      comment.save
+    
+      # `redirect` back to wherever we came from
+      redirect(back)
     end
 
+
+    post '/likes' do
+      finstagram_post_id = params[:finstagram_post_id]
+    
+      like = Like.new({ finstagram_post_id: finstagram_post_id, user_id: current_user.id })
+      like.save
+    
+      redirect(back)
+    end
+
+
+    delete '/likes/:id' do
+      like = Like.find(params[:id])
+      like.destroy
+      redirect(back)
+    end
