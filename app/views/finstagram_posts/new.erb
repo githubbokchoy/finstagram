@@ -23,7 +23,7 @@
 <script src="/scripts/hello.js"></script> -->
 
 <script>
-//console.log(document);
+//console.log(document); //to list out all the elements, e.g. event.target.value
 /*function hello(){
 
 console.log ("Hello World");
@@ -34,12 +34,13 @@ console.log(document);
   var photoUrlElm = document.getElementById("photo_url");
   var previewElm = document.getElementById("preview");
   //console.log(photoUrlElm);
+  //listen for cursor to leave the input
   photoUrlElm.addEventListener("blur", function(event){
 
     //console.log(event.target.value);  //javascript notation uses event.target instead of event ["target"] in ruby
     var url = event.target.value;
     if(url){
-      //set the image src value
+      //Set the img src attribute to the input's text
       previewElm.setAttribute("src", url);
       //show the img elm
       previewElm.style.display = "block";
