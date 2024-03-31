@@ -1,4 +1,4 @@
-# A sample Gemfile
+# A sample Gemfile for developer windows version
 source "https://rubygems.org"
 
 gem 'rake'
