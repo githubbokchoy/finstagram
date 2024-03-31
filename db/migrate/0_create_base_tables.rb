@@ -1,5 +1,5 @@
-class CreateBaseTables < ActiveRecord::Migration
-
+#class CreateBaseTables < ActiveRecord::Migration  #original code
+class CreateBaseTables < ActiveRecord::Migration[5.0]  #for render deployment
   def change
     create_table :users do |t|
       t.string :username

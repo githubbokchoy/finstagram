@@ -17,10 +17,18 @@ gem "rackup"
 #gem 'rails', '>= 5.2.2.1'
 #gem 'psych', "~> 4"  #cannot be a newer version, since Psych 5 is not compatible with activerecords
 gem 'reek'  #relaxes dependency on psych versions
+gem 'pry'
 
 group :development, :test do
-  gem 'pry'
+  #gem 'pry'
   #gem 'shotgun', git: 'https://github.com/delonnewman/shotgun.git'
-  gem 'sqlite3', '>= 1.3.6', platforms: [:mingw, :mswin, :x64_mingw, :ruby]
+  gem 'sqlite3', '>= 1.3.6', platforms: [:mingw, :mswin, :x64_mingw, :ruby] #1.5.3 for render
 end
 gem "sinatra-rax", "~> 1.0"  #execute by typing rax (not bundle exec rax), https://github.com/shreeve/sinatra-rax
+
+
+group :production do
+  gem 'pg'
+
+end
+

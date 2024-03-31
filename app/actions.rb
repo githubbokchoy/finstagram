@@ -33,9 +33,10 @@ helpers do  #why helpers rather than a bunch of standalone methods? can helpers 
     params[:nosessionlogout]
     
   end
-  # return a boolean (true or false)
+  # return a boolean (true or false), note that in a conditional statement, there's no need to force an object to become a boolean value; object is considered truthy, nil as falsy
   def logged_in?
     !!current_user
+    # this is data coersion, forcing object to a boolean value, i.e. true
   end
 
 #case to get input into 
