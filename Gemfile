@@ -7,7 +7,7 @@ gem 'activerecord', '< 6.1.0'
 gem 'sinatra', '~> 3.0.2'
 gem 'sinatra-contrib'
 gem 'sinatra-activerecord'
-
+gem "bigdecimal", '>= 1.3.0'
 gem 'puma'
 
 #gem 'rails', '>= 5.2.2.1'
@@ -19,7 +19,7 @@ group :development, :test do
   #gem 'activerecord', '>= 4.2.0'
   #gem 'sinatra'
   gem 'tux'
-  gem "bigdecimal", '>= 1.3.0'
+ 
   gem "rack", '>= 1.0'
   gem "rackup"
   gem 'reek'  #relaxes dependency on psych versions
