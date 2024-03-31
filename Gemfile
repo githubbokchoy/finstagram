@@ -1,4 +1,7 @@
 #for deployment, for developement, use gemfile01 file; bundle install to recreate the gemfile.lock (remove gemlock file before bundle install)
+#gem install bundler
+#bundler update
+#bundle install
 
 source "https://rubygems.org"
 
