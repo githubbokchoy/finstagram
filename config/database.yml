@@ -1,7 +1,0 @@
-adapter: sqlite3
-#database: db/db_dev_db.sqlite3
-database: "db/db.sqlite3"
-pool: 5
-timeout: 5000
-
-#pulled from stack overflow
