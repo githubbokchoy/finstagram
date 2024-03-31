@@ -1,5 +1,6 @@
 # db/seed.rb  #seed is a default name used by rake, reserved name
 
+
 records = [
   {
     user: { username: "sharky_j", avatar_url: "https://live.staticflickr.com/65535/52358606250_01c667c5da_w.jpg", email: "sharky_j@gmail.com", password: "abcd" },
@@ -30,4 +31,37 @@ records.each do |record|
     puts "-- Seeded a FinstagramPost for User: #{user.username}"
   end
 end
+
+=begin
+  
+
+
+comments = [
+  {user_id: 1, finstagram_post_id: 1, text: "Mar 23 2024 comment again"},
+  {user_id: 2, finstagram_post_id: 1, text: "Mar 23 2024 #2 comment"}
+]
+
+comments.each do |u|
+  Comment.create(u)
+  #test.save
+end
+=end
+
+
+#rake db:seed
+# from config.ru, from rakefile
+
+
+# t.string :username
+# t.string :avatar_url
+# t.string :email
+# t.string :password
+# t.timestamps
+
+# users
+
+
+# comment = Comment.new({ user_id: 1, finstagram_post_id: 1, text: "this is awesome!" })
+# comment.save
+
 

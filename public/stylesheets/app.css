@@ -79,7 +79,7 @@ body {
   Mobile-first: min-widths in ASC
 */
 
-/*
+
 @media screen and (max-width: 768px) {
   main {
     width: 70%;
@@ -100,42 +100,5 @@ body {
   p {
     font-size: 0.9em;
   }
-}*/
-
-
-/* Viewports smaller than 768 pixels */
-@media screen and (max-width: 768px) {
-
-  header {
-    display: flex;
-    align-items: center;
-    padding: 0 1em;
-  }
-  header .login-info {
-    display: flex;
-    flex-direction: column;
-    font-size: 1.2em;
-  }
-  header .login-info a {
-    padding: 8px 0;
-  }
-
 }
 
-/* Viewports smaller than 480 pixels */
-@media screen and (max-width: 480px) {
-
-  main {
-    width: 90%;
-  }
-  .user-info {
-    align-items: center;
-  }
-  .user-info h2 {
-    font-size: 1.4em;
-  }
-  .user-info h3 {
-    font-size: 0.95em;
-  }
-
-}
