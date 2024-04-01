@@ -40,3 +40,6 @@ group :production do
 
 end
 
+# after running bundle install, need to modify gemlock file to include linux server platform for render. i.e. local platform is  x64-mingw-ucrt on windows
+#bundle lock --add-platform x86_64-linux
+#compare against dGemfile01 (windows make)
